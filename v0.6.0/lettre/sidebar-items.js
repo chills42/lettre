@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["email","Simple email representation"],["transport","Represents an Email transport"]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["error","Error and result type for file transport"]],"struct":[["StubEmailTransport","This transport does nothing except logging the message envelope"]],"type":[["StubResult","SMTP result type"]]});

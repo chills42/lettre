@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["FileEmailTransport","Writes the content and the enveloppe information to a file"]]});
