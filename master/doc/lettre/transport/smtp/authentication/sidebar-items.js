@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Mechanism","Represents authentication mechanisms"]]});

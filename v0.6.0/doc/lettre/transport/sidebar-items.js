@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["file","This transport creates a file for each email, containing the envelope information and the email itself."],["smtp","This transport sends emails using the SMTP protocol"],["stub","This transport is a stub that only logs the message, and always returns success"]],"trait":[["EmailTransport","Transport method for emails"]]});

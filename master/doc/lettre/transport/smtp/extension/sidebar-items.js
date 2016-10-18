@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Extension","Supported ESMTP keywords"]],"struct":[["ServerInfo","Contains information about an SMTP server"]]});

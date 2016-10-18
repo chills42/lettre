@@ -773,13 +773,81 @@
 <span id="729">729</span>
 <span id="730">730</span>
 <span id="731">731</span>
+<span id="732">732</span>
+<span id="733">733</span>
+<span id="734">734</span>
+<span id="735">735</span>
+<span id="736">736</span>
+<span id="737">737</span>
+<span id="738">738</span>
+<span id="739">739</span>
+<span id="740">740</span>
+<span id="741">741</span>
+<span id="742">742</span>
+<span id="743">743</span>
+<span id="744">744</span>
+<span id="745">745</span>
+<span id="746">746</span>
+<span id="747">747</span>
+<span id="748">748</span>
+<span id="749">749</span>
+<span id="750">750</span>
+<span id="751">751</span>
+<span id="752">752</span>
+<span id="753">753</span>
+<span id="754">754</span>
+<span id="755">755</span>
+<span id="756">756</span>
+<span id="757">757</span>
+<span id="758">758</span>
+<span id="759">759</span>
+<span id="760">760</span>
+<span id="761">761</span>
+<span id="762">762</span>
+<span id="763">763</span>
+<span id="764">764</span>
+<span id="765">765</span>
+<span id="766">766</span>
+<span id="767">767</span>
+<span id="768">768</span>
+<span id="769">769</span>
+<span id="770">770</span>
+<span id="771">771</span>
+<span id="772">772</span>
+<span id="773">773</span>
+<span id="774">774</span>
+<span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
+<span id="778">778</span>
+<span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
+<span id="783">783</span>
+<span id="784">784</span>
+<span id="785">785</span>
+<span id="786">786</span>
+<span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
+<span id="790">790</span>
+<span id="791">791</span>
+<span id="792">792</span>
+<span id="793">793</span>
+<span id="794">794</span>
+<span id="795">795</span>
+<span id="796">796</span>
+<span id="797">797</span>
+<span id="798">798</span>
+<span id="799">799</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Simple email representation</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>error</span>;
 
 <span class='kw'>use</span> <span class='ident'>email</span>::<span class='ident'>error</span>::<span class='ident'>Error</span>;
 
-<span class='kw'>use</span> <span class='ident'>email_format</span>::{<span class='ident'>Header</span>, <span class='ident'>Mailbox</span>, <span class='ident'>MimeMessage</span>, <span class='ident'>MimeMultipartType</span>};
+<span class='kw'>use</span> <span class='ident'>email_format</span>::{<span class='ident'>Header</span>, <span class='ident'>Mailbox</span>, <span class='ident'>Address</span>, <span class='ident'>MimeMessage</span>, <span class='ident'>MimeMultipartType</span>};
 <span class='kw'>use</span> <span class='ident'>mime</span>::<span class='ident'>Mime</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>::{<span class='ident'>Display</span>, <span class='ident'>Formatter</span>};
@@ -1013,6 +1081,16 @@
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>EmailBuilder</span> {
     <span class='doccomment'>/// Message</span>
     <span class='ident'>message</span>: <span class='ident'>PartBuilder</span>,
+    <span class='doccomment'>/// The recipients&#39; addresses for the mail header</span>
+    <span class='ident'>to_header</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Address</span><span class='op'>&gt;</span>,
+    <span class='doccomment'>/// The sender addresses for the mail header</span>
+    <span class='ident'>from_header</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Address</span><span class='op'>&gt;</span>,
+    <span class='doccomment'>/// The Cc addresses for the mail header</span>
+    <span class='ident'>cc_header</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Address</span><span class='op'>&gt;</span>,
+    <span class='doccomment'>/// The Reply-To addresses for the mail header</span>
+    <span class='ident'>reply_to_header</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Address</span><span class='op'>&gt;</span>,
+    <span class='doccomment'>/// The sender address for the mail header</span>
+    <span class='ident'>sender_header</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Mailbox</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// The envelope recipients&#39; addresses</span>
     <span class='ident'>to</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// The envelope sender address</span>
@@ -1121,6 +1199,11 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>EmailBuilder</span> {
         <span class='ident'>EmailBuilder</span> {
             <span class='ident'>message</span>: <span class='ident'>PartBuilder</span>::<span class='ident'>new</span>(),
+            <span class='ident'>to_header</span>: <span class='macro'>vec</span><span class='macro'>!</span>[],
+            <span class='ident'>from_header</span>: <span class='macro'>vec</span><span class='macro'>!</span>[],
+            <span class='ident'>cc_header</span>: <span class='macro'>vec</span><span class='macro'>!</span>[],
+            <span class='ident'>reply_to_header</span>: <span class='macro'>vec</span><span class='macro'>!</span>[],
+            <span class='ident'>sender_header</span>: <span class='prelude-val'>None</span>,
             <span class='ident'>to</span>: <span class='macro'>vec</span><span class='macro'>!</span>[],
             <span class='ident'>from</span>: <span class='prelude-val'>None</span>,
             <span class='ident'>date_issued</span>: <span class='bool-val'>false</span>,
@@ -1158,8 +1241,8 @@
     <span class='doccomment'>/// Adds a `From` header and stores the sender address</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_from</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>ToMailbox</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>address</span>: <span class='ident'>A</span>) {
         <span class='kw'>let</span> <span class='ident'>mailbox</span> <span class='op'>=</span> <span class='ident'>address</span>.<span class='ident'>to_mailbox</span>();
-        <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>((<span class='string'>&quot;From&quot;</span>, <span class='ident'>mailbox</span>.<span class='ident'>to_string</span>().<span class='ident'>as_ref</span>()));
-        <span class='self'>self</span>.<span class='ident'>from</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mailbox</span>.<span class='ident'>address</span>);
+        <span class='self'>self</span>.<span class='ident'>from</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mailbox</span>.<span class='ident'>address</span>.<span class='ident'>clone</span>());
+        <span class='self'>self</span>.<span class='ident'>from_header</span>.<span class='ident'>push</span>(<span class='ident'>Address</span>::<span class='ident'>Mailbox</span>(<span class='ident'>mailbox</span>));
     }
 
     <span class='doccomment'>/// Adds a `To` header and stores the recipient address</span>
@@ -1171,8 +1254,8 @@
     <span class='doccomment'>/// Adds a `To` header and stores the recipient address</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_to</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>ToMailbox</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>address</span>: <span class='ident'>A</span>) {
         <span class='kw'>let</span> <span class='ident'>mailbox</span> <span class='op'>=</span> <span class='ident'>address</span>.<span class='ident'>to_mailbox</span>();
-        <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>((<span class='string'>&quot;To&quot;</span>, <span class='ident'>mailbox</span>.<span class='ident'>to_string</span>().<span class='ident'>as_ref</span>()));
-        <span class='self'>self</span>.<span class='ident'>to</span>.<span class='ident'>push</span>(<span class='ident'>mailbox</span>.<span class='ident'>address</span>);
+        <span class='self'>self</span>.<span class='ident'>to</span>.<span class='ident'>push</span>(<span class='ident'>mailbox</span>.<span class='ident'>address</span>.<span class='ident'>clone</span>());
+        <span class='self'>self</span>.<span class='ident'>to_header</span>.<span class='ident'>push</span>(<span class='ident'>Address</span>::<span class='ident'>Mailbox</span>(<span class='ident'>mailbox</span>));
     }
 
     <span class='doccomment'>/// Adds a `Cc` header and stores the recipient address</span>
@@ -1184,8 +1267,8 @@
     <span class='doccomment'>/// Adds a `Cc` header and stores the recipient address</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_cc</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>ToMailbox</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>address</span>: <span class='ident'>A</span>) {
         <span class='kw'>let</span> <span class='ident'>mailbox</span> <span class='op'>=</span> <span class='ident'>address</span>.<span class='ident'>to_mailbox</span>();
-        <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>((<span class='string'>&quot;Cc&quot;</span>, <span class='ident'>mailbox</span>.<span class='ident'>to_string</span>().<span class='ident'>as_ref</span>()));
-        <span class='self'>self</span>.<span class='ident'>to</span>.<span class='ident'>push</span>(<span class='ident'>mailbox</span>.<span class='ident'>address</span>);
+        <span class='self'>self</span>.<span class='ident'>to</span>.<span class='ident'>push</span>(<span class='ident'>mailbox</span>.<span class='ident'>address</span>.<span class='ident'>clone</span>());
+        <span class='self'>self</span>.<span class='ident'>cc_header</span>.<span class='ident'>push</span>(<span class='ident'>Address</span>::<span class='ident'>Mailbox</span>(<span class='ident'>mailbox</span>));
     }
 
     <span class='doccomment'>/// Adds a `Reply-To` header</span>
@@ -1197,7 +1280,7 @@
     <span class='doccomment'>/// Adds a `Reply-To` header</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_reply_to</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>ToMailbox</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>address</span>: <span class='ident'>A</span>) {
         <span class='kw'>let</span> <span class='ident'>mailbox</span> <span class='op'>=</span> <span class='ident'>address</span>.<span class='ident'>to_mailbox</span>();
-        <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>((<span class='string'>&quot;Reply-To&quot;</span>, <span class='ident'>mailbox</span>.<span class='ident'>to_string</span>().<span class='ident'>as_ref</span>()));
+        <span class='self'>self</span>.<span class='ident'>reply_to_header</span>.<span class='ident'>push</span>(<span class='ident'>Address</span>::<span class='ident'>Mailbox</span>(<span class='ident'>mailbox</span>));
     }
 
     <span class='doccomment'>/// Adds a `Sender` header</span>
@@ -1209,8 +1292,8 @@
     <span class='doccomment'>/// Adds a `Sender` header</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_sender</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>ToMailbox</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>address</span>: <span class='ident'>A</span>) {
         <span class='kw'>let</span> <span class='ident'>mailbox</span> <span class='op'>=</span> <span class='ident'>address</span>.<span class='ident'>to_mailbox</span>();
-        <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>((<span class='string'>&quot;Sender&quot;</span>, <span class='ident'>mailbox</span>.<span class='ident'>to_string</span>().<span class='ident'>as_ref</span>()));
-        <span class='self'>self</span>.<span class='ident'>from</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mailbox</span>.<span class='ident'>address</span>);
+        <span class='self'>self</span>.<span class='ident'>from</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mailbox</span>.<span class='ident'>address</span>.<span class='ident'>clone</span>());
+        <span class='self'>self</span>.<span class='ident'>sender_header</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mailbox</span>);
     }
 
     <span class='doccomment'>/// Adds a `Subject` header</span>
@@ -1320,6 +1403,38 @@
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>to</span>.<span class='ident'>is_empty</span>() {
             <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>MissingTo</span>);
         }
+        <span class='comment'>// If there are multiple addresses in &quot;From&quot;, the &quot;Sender&quot; is required.</span>
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>from_header</span>.<span class='ident'>len</span>() <span class='op'>&gt;=</span> <span class='number'>2</span> <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>sender_header</span>.<span class='ident'>is_none</span>() {
+            <span class='comment'>// So, we must find something to put as Sender.</span>
+            <span class='kw'>for</span> <span class='ident'>possible_sender</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>from_header</span>.<span class='ident'>iter</span>() {
+                <span class='comment'>// Only a mailbox can be used as sender, not Address::Group.</span>
+                <span class='kw'>if</span> <span class='kw'>let</span> <span class='kw-2'>&amp;</span><span class='ident'>Address</span>::<span class='ident'>Mailbox</span>(<span class='kw-2'>ref</span> <span class='ident'>mbx</span>) <span class='op'>=</span> <span class='ident'>possible_sender</span> {
+                    <span class='self'>self</span>.<span class='ident'>sender_header</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mbx</span>.<span class='ident'>clone</span>());
+                    <span class='kw'>break</span>;
+                }
+            }
+            <span class='comment'>// Address::Group is not yet supported, so the line below will never panic.</span>
+            <span class='comment'>// If groups are supported one day, add another Error for this case</span>
+            <span class='comment'>//  and return it here, if sender_header is still None at this point.</span>
+            <span class='macro'>assert</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>sender_header</span>.<span class='ident'>is_some</span>());
+        }
+        <span class='comment'>// Add the sender header, if any.</span>
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>v</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sender_header</span> {
+            <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>((<span class='string'>&quot;Sender&quot;</span>, <span class='ident'>v</span>.<span class='ident'>to_string</span>().<span class='ident'>as_ref</span>()));
+        }
+        <span class='comment'>// Add the collected addresses as mailbox-list all at once.</span>
+        <span class='comment'>// The unwraps are fine because the conversions for Vec&lt;Address&gt; never errs.</span>
+        <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>(<span class='ident'>Header</span>::<span class='ident'>new_with_value</span>(<span class='string'>&quot;To&quot;</span>.<span class='ident'>into</span>(), <span class='self'>self</span>.<span class='ident'>to_header</span>).<span class='ident'>unwrap</span>());
+        <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>(<span class='ident'>Header</span>::<span class='ident'>new_with_value</span>(<span class='string'>&quot;From&quot;</span>.<span class='ident'>into</span>(), <span class='self'>self</span>.<span class='ident'>from_header</span>).<span class='ident'>unwrap</span>());
+        <span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>cc_header</span>.<span class='ident'>is_empty</span>() {
+            <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>(<span class='ident'>Header</span>::<span class='ident'>new_with_value</span>(<span class='string'>&quot;Cc&quot;</span>.<span class='ident'>into</span>(), <span class='self'>self</span>.<span class='ident'>cc_header</span>).<span class='ident'>unwrap</span>());
+        }
+        <span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>reply_to_header</span>.<span class='ident'>is_empty</span>() {
+            <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>(<span class='ident'>Header</span>::<span class='ident'>new_with_value</span>(<span class='string'>&quot;Reply-To&quot;</span>.<span class='ident'>into</span>(),
+                                                           <span class='self'>self</span>.<span class='ident'>reply_to_header</span>)
+                .<span class='ident'>unwrap</span>());
+        }
+
 
         <span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>date_issued</span> {
             <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>((<span class='string'>&quot;Date&quot;</span>, <span class='ident'>Tm</span>::<span class='ident'>rfc822z</span>(<span class='kw-2'>&amp;</span><span class='ident'>now</span>()).<span class='ident'>to_string</span>().<span class='ident'>as_ref</span>()));
@@ -1455,6 +1570,27 @@
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
+    <span class='kw'>fn</span> <span class='ident'>test_multiple_from</span>() {
+        <span class='kw'>let</span> <span class='ident'>email_builder</span> <span class='op'>=</span> <span class='ident'>EmailBuilder</span>::<span class='ident'>new</span>();
+        <span class='kw'>let</span> <span class='ident'>date_now</span> <span class='op'>=</span> <span class='ident'>now</span>();
+        <span class='kw'>let</span> <span class='ident'>email</span> <span class='op'>=</span> <span class='ident'>email_builder</span>.<span class='ident'>to</span>(<span class='string'>&quot;anna@example.com&quot;</span>)
+            .<span class='ident'>from</span>(<span class='string'>&quot;dieter@example.com&quot;</span>)
+            .<span class='ident'>from</span>(<span class='string'>&quot;joachim@example.com&quot;</span>)
+            .<span class='ident'>date</span>(<span class='kw-2'>&amp;</span><span class='ident'>date_now</span>)
+            .<span class='ident'>subject</span>(<span class='string'>&quot;Invitation&quot;</span>)
+            .<span class='ident'>body</span>(<span class='string'>&quot;We invite you!&quot;</span>)
+            .<span class='ident'>build</span>()
+            .<span class='ident'>unwrap</span>();
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>email</span>),
+                   <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Date: {}\r\nSubject: Invitation\r\nSender: \
+                            &lt;dieter@example.com&gt;\r\nTo: &lt;anna@example.com&gt;\r\nFrom: \
+                            &lt;dieter@example.com&gt;, &lt;joachim@example.com&gt;\r\nMIME-Version: \
+                            1.0\r\nMessage-ID: &lt;{}.lettre@localhost&gt;\r\n\r\nWe invite you!\r\n&quot;</span>,
+                           <span class='ident'>date_now</span>.<span class='ident'>rfc822z</span>(),
+                           <span class='ident'>email</span>.<span class='ident'>message_id</span>()));
+    }
+
+    <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_simple_email_builder</span>() {
         <span class='kw'>let</span> <span class='ident'>email_builder</span> <span class='op'>=</span> <span class='ident'>EmailBuilder</span>::<span class='ident'>new</span>();
         <span class='kw'>let</span> <span class='ident'>date_now</span> <span class='op'>=</span> <span class='ident'>now</span>();
@@ -1472,10 +1608,10 @@
             .<span class='ident'>unwrap</span>();
 
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>email</span>),
-                   <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;To: &lt;user@localhost&gt;\r\nFrom: &lt;user@localhost&gt;\r\nCc: \&quot;Alias\&quot; \
-                            &lt;cc@localhost&gt;\r\nReply-To: &lt;reply@localhost&gt;\r\nSender: \
-                            &lt;sender@localhost&gt;\r\nDate: {}\r\nSubject: Hello\r\nX-test: \
-                            value\r\nMIME-Version: 1.0\r\nMessage-ID: \
+                   <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Date: {}\r\nSubject: Hello\r\nX-test: value\r\nSender: \
+                            &lt;sender@localhost&gt;\r\nTo: &lt;user@localhost&gt;\r\nFrom: \
+                            &lt;user@localhost&gt;\r\nCc: \&quot;Alias\&quot; &lt;cc@localhost&gt;\r\nReply-To: \
+                            &lt;reply@localhost&gt;\r\nMIME-Version: 1.0\r\nMessage-ID: \
                             &lt;{}.lettre@localhost&gt;\r\n\r\nHello World!\r\n&quot;</span>,
                            <span class='ident'>date_now</span>.<span class='ident'>rfc822z</span>(),
                            <span class='ident'>email</span>.<span class='ident'>message_id</span>()));

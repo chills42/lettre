@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["net","A trait to represent a stream"]],"struct":[["Client","Structure that implements the SMTP client"]]});
