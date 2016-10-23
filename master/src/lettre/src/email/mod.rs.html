@@ -985,8 +985,6 @@
 <span id="941">941</span>
 <span id="942">942</span>
 <span id="943">943</span>
-<span id="944">944</span>
-<span id="945">945</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Simple email representation</span>
 
@@ -1071,8 +1069,6 @@
         <span class='kw'>for</span> <span class='ident'>cc_address</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>cc</span> {
             <span class='ident'>builder</span>.<span class='ident'>add_cc</span>(<span class='ident'>cc_address</span>.<span class='ident'>into_mailbox</span>());
         }
-
-        <span class='comment'>// No bcc for now</span>
 
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>reply_to</span>.<span class='ident'>is_some</span>() {
             <span class='ident'>builder</span>.<span class='ident'>add_reply_to</span>(<span class='self'>self</span>.<span class='ident'>reply_to</span>.<span class='ident'>unwrap</span>().<span class='ident'>into_mailbox</span>());

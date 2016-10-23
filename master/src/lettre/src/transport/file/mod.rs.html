@@ -134,7 +134,7 @@
                                <span class='ident'>email</span>.<span class='ident'>to_addresses</span>().<span class='ident'>join</span>(<span class='string'>&quot;&gt; to=&lt;&quot;</span>));
 
         <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>f</span>.<span class='ident'>write_all</span>(<span class='ident'>log_line</span>.<span class='ident'>as_bytes</span>()));
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>f</span>.<span class='ident'>write_all</span>(<span class='ident'>email</span>.<span class='ident'>message</span>().<span class='ident'>clone</span>().<span class='ident'>as_bytes</span>()));
+        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>f</span>.<span class='ident'>write_all</span>(<span class='ident'>email</span>.<span class='ident'>message</span>().<span class='ident'>as_bytes</span>()));
 
         <span class='macro'>info</span><span class='macro'>!</span>(<span class='string'>&quot;{} status=&lt;written&gt;&quot;</span>, <span class='ident'>log_line</span>);
 
