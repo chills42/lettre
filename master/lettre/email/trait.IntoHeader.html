@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `ToMailbox` trait in crate `lettre`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, ToMailbox">
+    <meta name="description" content="API documentation for the Rust `IntoHeader` trait in crate `lettre`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, IntoHeader">
 
-    <title>lettre::email::ToMailbox - Rust</title>
+    <title>lettre::email::IntoHeader - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
@@ -28,7 +28,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>lettre</a>::<wbr><a href='index.html'>email</a></p><script>window.sidebarCurrent = {name: 'ToMailbox', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>lettre</a>::<wbr><a href='index.html'>email</a></p><script>window.sidebarCurrent = {name: 'IntoHeader', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,26 +43,25 @@
     </nav>
 
     <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>lettre</a>::<wbr><a href='index.html'>email</a>::<wbr><a class='trait' href=''>ToMailbox</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>lettre</a>::<wbr><a href='index.html'>email</a>::<wbr><a class='trait' href=''>IntoHeader</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1134' class='srclink' href='../../src/lettre/src/email/mod.rs.html#33-36' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait ToMailbox {
-    fn <a href='#tymethod.to_mailbox' class='fnname'>to_mailbox</a>(&amp;self) -&gt; Mailbox;
-}</pre><div class='docblock'><p>Converts an adress or an address with an alias to a <code>Mailbox</code></p>
+               </span><a id='src-1158' class='srclink' href='../../src/lettre/src/email/mod.rs.html#14-17' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait IntoHeader {
+    fn <a href='#tymethod.into_header' class='fnname'>into_header</a>(self) -&gt; Header;
+}</pre><div class='docblock'><p>Converts an address or an address with an alias to a <code>Header</code></p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.to_mailbox' class='method stab '><code>fn <a href='#tymethod.to_mailbox' class='fnname'>to_mailbox</a>(&amp;self) -&gt; Mailbox</code></h3><div class='docblock'><p>Converts to a <code>Mailbox</code> struct</p>
+        <h3 id='tymethod.into_header' class='method stab '><code>fn <a href='#tymethod.into_header' class='fnname'>into_header</a>(self) -&gt; Header</code></h3><div class='docblock'><p>Converts to a <code>Header</code> struct</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl ToMailbox for Mailbox</code></li>
-<li><code>impl&lt;'a&gt; ToMailbox for &amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></li>
-<li><code>impl&lt;'a&gt; ToMailbox for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>&amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, &amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></li>
+    <li><code>impl IntoHeader for Header</code></li>
+<li><code>impl&lt;S:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,&nbsp;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt; IntoHeader for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>S, T<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></li>
 </ul><script type="text/javascript" async
-                         src="../../implementors/lettre/email/trait.ToMailbox.js">
+                         src="../../implementors/lettre/email/trait.IntoHeader.js">
                  </script></section>
     <section id='search' class="content hidden"></section>
 

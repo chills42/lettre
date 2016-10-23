@@ -70,6 +70,7 @@
 <span id="26">26</span>
 <span id="27">27</span>
 <span id="28">28</span>
+<span id="29">29</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! This transport is a stub that only logs the message, and always returns</span>
 <span class='doccomment'>//! success</span>
@@ -80,6 +81,7 @@
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>error</span>;
 
 <span class='doccomment'>/// This transport does nothing except logging the message envelope</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>StubEmailTransport</span>;
 
 <span class='doccomment'>/// SMTP result type</span>

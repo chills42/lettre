@@ -328,11 +328,8 @@
 <span id="284">284</span>
 <span id="285">285</span>
 <span id="286">286</span>
-<span id="287">287</span>
-<span id="288">288</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! SMTP client</span>
-
 
 <span class='kw'>use</span> <span class='ident'>bufstream</span>::<span class='ident'>BufStream</span>;
 <span class='kw'>use</span> <span class='ident'>openssl</span>::<span class='ident'>ssl</span>::<span class='ident'>SslContext</span>;
@@ -344,8 +341,7 @@
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::{<span class='ident'>CRLF</span>, <span class='ident'>MESSAGE_ENDING</span>};
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>authentication</span>::<span class='ident'>Mechanism</span>;
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>client</span>::<span class='ident'>net</span>::{<span class='ident'>Connector</span>, <span class='ident'>NetworkStream</span>};
-
-<span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>error</span>::{<span class='ident'>SmtpResult</span>, <span class='ident'>Error</span>};
+<span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>error</span>::{<span class='ident'>Error</span>, <span class='ident'>SmtpResult</span>};
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>response</span>::<span class='ident'>ResponseParser</span>;
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>net</span>;

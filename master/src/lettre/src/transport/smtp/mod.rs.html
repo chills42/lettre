@@ -461,19 +461,20 @@
 <span id="417">417</span>
 <span id="418">418</span>
 <span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! This transport sends emails using the SMTP protocol</span>
 
 <span class='kw'>use</span> <span class='ident'>email</span>::<span class='ident'>SendableEmail</span>;
-
 <span class='kw'>use</span> <span class='ident'>openssl</span>::<span class='ident'>ssl</span>::{<span class='ident'>SslContext</span>, <span class='ident'>SslMethod</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::{<span class='ident'>SocketAddr</span>, <span class='ident'>ToSocketAddrs</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>string</span>::<span class='ident'>String</span>;
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>EmailTransport</span>;
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>authentication</span>::<span class='ident'>Mechanism</span>;
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>client</span>::<span class='ident'>Client</span>;
-
-<span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>error</span>::{<span class='ident'>SmtpResult</span>, <span class='ident'>Error</span>};
+<span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>error</span>::{<span class='ident'>Error</span>, <span class='ident'>SmtpResult</span>};
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>extension</span>::{<span class='ident'>Extension</span>, <span class='ident'>ServerInfo</span>};
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>extension</span>;
@@ -529,6 +530,7 @@
 }
 
 <span class='doccomment'>/// Contains client configuration</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SmtpTransportBuilder</span> {
     <span class='doccomment'>/// Maximum connection reuse</span>
     <span class='doccomment'>///</span>
@@ -616,8 +618,8 @@
     }
 
     <span class='doccomment'>/// Set the name used during HELO or EHLO</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>hello_name</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>SmtpTransportBuilder</span> {
-        <span class='self'>self</span>.<span class='ident'>hello_name</span> <span class='op'>=</span> <span class='ident'>name</span>.<span class='ident'>to_string</span>();
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>hello_name</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>SmtpTransportBuilder</span> {
+        <span class='self'>self</span>.<span class='ident'>hello_name</span> <span class='op'>=</span> <span class='ident'>name</span>.<span class='ident'>into</span>();
         <span class='self'>self</span>
     }
 
@@ -634,8 +636,11 @@
     }
 
     <span class='doccomment'>/// Set the client credentials</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>credentials</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>username</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>password</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>SmtpTransportBuilder</span> {
-        <span class='self'>self</span>.<span class='ident'>credentials</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>((<span class='ident'>username</span>.<span class='ident'>to_string</span>(), <span class='ident'>password</span>.<span class='ident'>to_string</span>()));
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>credentials</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>,
+                                        <span class='ident'>username</span>: <span class='ident'>S</span>,
+                                        <span class='ident'>password</span>: <span class='ident'>S</span>)
+                                        <span class='op'>-&gt;</span> <span class='ident'>SmtpTransportBuilder</span> {
+        <span class='self'>self</span>.<span class='ident'>credentials</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>((<span class='ident'>username</span>.<span class='ident'>into</span>(), <span class='ident'>password</span>.<span class='ident'>into</span>()));
         <span class='self'>self</span>
     }
 
@@ -663,6 +668,7 @@
 }
 
 <span class='doccomment'>/// Structure that implements the high level SMTP client</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SmtpTransport</span> {
     <span class='doccomment'>/// Information about the server</span>
     <span class='doccomment'>/// Value is None before HELO/EHLO</span>

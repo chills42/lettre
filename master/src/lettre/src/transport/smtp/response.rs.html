@@ -624,20 +624,16 @@
 <span id="580">580</span>
 <span id="581">581</span>
 <span id="582">582</span>
-<span id="583">583</span>
-<span id="584">584</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! SMTP response, containing a mandatory return code and an optional text</span>
 <span class='doccomment'>//! message</span>
 
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Category</span>::<span class='op'>*</span>;
-
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Severity</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>::{<span class='ident'>Display</span>, <span class='ident'>Formatter</span>, <span class='prelude-ty'>Result</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>result</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>;
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>error</span>::{<span class='ident'>Error</span>, <span class='ident'>SmtpResult</span>};
-
 
 <span class='doccomment'>/// First digit indicates severity</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>,<span class='ident'>Eq</span>,<span class='ident'>Copy</span>,<span class='ident'>Clone</span>,<span class='ident'>Debug</span>)]</span>

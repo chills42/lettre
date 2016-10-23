@@ -151,20 +151,16 @@
 <span id="107">107</span>
 <span id="108">108</span>
 <span id="109">109</span>
-<span id="110">110</span>
-<span id="111">111</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Provides authentication mechanisms</span>
 
 <span class='kw'>use</span> <span class='ident'>crypto</span>::<span class='ident'>hmac</span>::<span class='ident'>Hmac</span>;
 <span class='kw'>use</span> <span class='ident'>crypto</span>::<span class='ident'>mac</span>::<span class='ident'>Mac</span>;
 <span class='kw'>use</span> <span class='ident'>crypto</span>::<span class='ident'>md5</span>::<span class='ident'>Md5</span>;
-
 <span class='kw'>use</span> <span class='ident'>rustc_serialize</span>::<span class='ident'>base64</span>::{<span class='self'>self</span>, <span class='ident'>FromBase64</span>, <span class='ident'>ToBase64</span>};
 <span class='kw'>use</span> <span class='ident'>rustc_serialize</span>::<span class='ident'>hex</span>::<span class='ident'>ToHex</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>::{<span class='ident'>Display</span>, <span class='ident'>Formatter</span>};
-
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>NUL</span>;
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>error</span>::<span class='ident'>Error</span>;
 
