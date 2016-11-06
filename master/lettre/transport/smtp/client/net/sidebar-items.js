@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["NetworkStream","Represents the different types of underlying network streams"]],"trait":[["Connector","A trait for the concept of opening a stream"]]});
+initSidebarItems({"enum":[["NetworkStream","Represents the different types of underlying network streams"]],"trait":[["Connector","A trait for the concept of opening a stream"],["Timeout","A trait for read and write timeout support"]]});

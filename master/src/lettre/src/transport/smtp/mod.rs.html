@@ -464,6 +464,19 @@
 <span id="420">420</span>
 <span id="421">421</span>
 <span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! This transport sends emails using the SMTP protocol</span>
 
@@ -471,6 +484,7 @@
 <span class='kw'>use</span> <span class='ident'>openssl</span>::<span class='ident'>ssl</span>::{<span class='ident'>SslContext</span>, <span class='ident'>SslMethod</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::{<span class='ident'>SocketAddr</span>, <span class='ident'>ToSocketAddrs</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>string</span>::<span class='ident'>String</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>Duration</span>;
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>EmailTransport</span>;
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>authentication</span>::<span class='ident'>Mechanism</span>;
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>client</span>::<span class='ident'>Client</span>;
@@ -552,6 +566,9 @@
     <span class='ident'>smtp_utf8</span>: <span class='ident'>bool</span>,
     <span class='doccomment'>/// Optional enforced authentication mechanism</span>
     <span class='ident'>authentication_mechanism</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Mechanism</span><span class='op'>&gt;</span>,
+    <span class='doccomment'>/// Define network timeout</span>
+    <span class='doccomment'>/// It can be changed later for specific needs (like a different timeout for each SMTP command)</span>
+    <span class='ident'>timeout</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Duration</span><span class='op'>&gt;</span>,
 }
 
 <span class='doccomment'>/// Builder for the SMTP `SmtpTransport`</span>
@@ -572,6 +589,7 @@
                     <span class='ident'>connection_reuse</span>: <span class='bool-val'>false</span>,
                     <span class='ident'>hello_name</span>: <span class='string'>&quot;localhost&quot;</span>.<span class='ident'>to_string</span>(),
                     <span class='ident'>authentication_mechanism</span>: <span class='prelude-val'>None</span>,
+                    <span class='ident'>timeout</span>: <span class='prelude-val'>Some</span>(<span class='ident'>Duration</span>::<span class='ident'>new</span>(<span class='number'>60</span>, <span class='number'>0</span>)),
                 })
             }
             <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>From</span>::<span class='ident'>from</span>(<span class='string'>&quot;Could nor resolve hostname&quot;</span>)),
@@ -647,6 +665,12 @@
     <span class='doccomment'>/// Set the authentication mechanisms</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>authentication_mechanism</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mechanism</span>: <span class='ident'>Mechanism</span>) <span class='op'>-&gt;</span> <span class='ident'>SmtpTransportBuilder</span> {
         <span class='self'>self</span>.<span class='ident'>authentication_mechanism</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>mechanism</span>);
+        <span class='self'>self</span>
+    }
+
+    <span class='doccomment'>/// Set the timeout duration</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>timeout</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>timeout</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Duration</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>SmtpTransportBuilder</span> {
+        <span class='self'>self</span>.<span class='ident'>timeout</span> <span class='op'>=</span> <span class='ident'>timeout</span>;
         <span class='self'>self</span>
     }
 
@@ -763,6 +787,8 @@
                                          }
                                          _ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
                                      }));
+
+            <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>client</span>.<span class='ident'>set_timeout</span>(<span class='self'>self</span>.<span class='ident'>client_info</span>.<span class='ident'>timeout</span>));
 
             <span class='comment'>// Log the connection</span>
             <span class='macro'>info</span><span class='macro'>!</span>(<span class='string'>&quot;connection established to {}&quot;</span>, <span class='self'>self</span>.<span class='ident'>client_info</span>.<span class='ident'>server_addr</span>);

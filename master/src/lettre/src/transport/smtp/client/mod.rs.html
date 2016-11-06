@@ -328,6 +328,19 @@
 <span id="284">284</span>
 <span id="285">285</span>
 <span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! SMTP client</span>
 
@@ -338,9 +351,10 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='ident'>BufRead</span>, <span class='ident'>Read</span>, <span class='ident'>Write</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::<span class='ident'>ToSocketAddrs</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>string</span>::<span class='ident'>String</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>Duration</span>;
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::{<span class='ident'>CRLF</span>, <span class='ident'>MESSAGE_ENDING</span>};
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>authentication</span>::<span class='ident'>Mechanism</span>;
-<span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>client</span>::<span class='ident'>net</span>::{<span class='ident'>Connector</span>, <span class='ident'>NetworkStream</span>};
+<span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>client</span>::<span class='ident'>net</span>::{<span class='ident'>Connector</span>, <span class='ident'>NetworkStream</span>, <span class='ident'>Timeout</span>};
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>error</span>::{<span class='ident'>Error</span>, <span class='ident'>SmtpResult</span>};
 <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>response</span>::<span class='ident'>ResponseParser</span>;
 
@@ -395,7 +409,7 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Connector</span> <span class='op'>+</span> <span class='ident'>Write</span> <span class='op'>+</span> <span class='ident'>Read</span> <span class='op'>+</span> <span class='ident'>Debug</span><span class='op'>&gt;</span> <span class='ident'>Client</span><span class='op'>&lt;</span><span class='ident'>S</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Connector</span> <span class='op'>+</span> <span class='ident'>Timeout</span> <span class='op'>+</span> <span class='ident'>Write</span> <span class='op'>+</span> <span class='ident'>Read</span> <span class='op'>+</span> <span class='ident'>Debug</span><span class='op'>&gt;</span> <span class='ident'>Client</span><span class='op'>&lt;</span><span class='ident'>S</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Closes the SMTP transaction if possible</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>close</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='kw'>let</span> _ <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>quit</span>();
@@ -420,6 +434,18 @@
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>stream</span> {
             <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>stream</span>) <span class='op'>=&gt;</span> <span class='ident'>stream</span>.<span class='ident'>get_ref</span>().<span class='ident'>is_encrypted</span>(),
             <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='bool-val'>false</span>,
+        }
+    }
+
+    <span class='doccomment'>/// Set timeout</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_timeout</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>duration</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Duration</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
+        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>stream</span> {
+            <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>stream</span>) <span class='op'>=&gt;</span> {
+                <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>stream</span>.<span class='ident'>get_mut</span>().<span class='ident'>set_read_timeout</span>(<span class='ident'>duration</span>));
+                <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>stream</span>.<span class='ident'>get_mut</span>().<span class='ident'>set_read_timeout</span>(<span class='ident'>duration</span>));
+                <span class='prelude-val'>Ok</span>(())
+            }
+            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(()),
         }
     }
 
