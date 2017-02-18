@@ -9,8 +9,8 @@
 
     <title>mod.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../../main.css">
     
 
     
@@ -130,8 +130,8 @@
 
         <span class='kw'>let</span> <span class='ident'>log_line</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}: from=&lt;{}&gt; to=&lt;{}&gt;\n&quot;</span>,
                                <span class='ident'>email</span>.<span class='ident'>message_id</span>(),
-                               <span class='ident'>email</span>.<span class='ident'>from_address</span>(),
-                               <span class='ident'>email</span>.<span class='ident'>to_addresses</span>().<span class='ident'>join</span>(<span class='string'>&quot;&gt; to=&lt;&quot;</span>));
+                               <span class='ident'>email</span>.<span class='ident'>envelope</span>().<span class='ident'>from</span>,
+                               <span class='ident'>email</span>.<span class='ident'>envelope</span>().<span class='ident'>to</span>.<span class='ident'>join</span>(<span class='string'>&quot;&gt; to=&lt;&quot;</span>));
 
         <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>f</span>.<span class='ident'>write_all</span>(<span class='ident'>log_line</span>.<span class='ident'>as_bytes</span>()));
         <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>f</span>.<span class='ident'>write_all</span>(<span class='ident'>email</span>.<span class='ident'>message</span>().<span class='ident'>as_bytes</span>()));
@@ -200,11 +200,11 @@
     
 
     <script>
-        window.rootPath = "../../../../../";
+        window.rootPath = "../../../../";
         window.currentCrate = "lettre";
     </script>
-    <script src="../../../../../jquery.js"></script>
-    <script src="../../../../../main.js"></script>
-    <script defer src="../../../../../search-index.js"></script>
+    <script src="../../../../jquery.js"></script>
+    <script src="../../../../main.js"></script>
+    <script defer src="../../../../search-index.js"></script>
 </body>
 </html>

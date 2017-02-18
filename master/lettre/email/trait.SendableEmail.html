@@ -47,18 +47,16 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-961' class='srclink' href='../../src/lettre/src/email/mod.rs.html#730-739' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/lettre/email/mod.rs.html#730-737' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait SendableEmail {
-    fn <a href='#tymethod.from_address' class='fnname'>from_address</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>;
-    fn <a href='#tymethod.to_addresses' class='fnname'>to_addresses</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.envelope' class='fnname'>envelope</a>(&amp;self) -&gt; &amp;<a class='struct' href='../../lettre/email/struct.Envelope.html' title='lettre::email::Envelope'>Envelope</a>;
     fn <a href='#tymethod.message_id' class='fnname'>message_id</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>;
     fn <a href='#tymethod.message' class='fnname'>message</a>(self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>;
 }</pre><div class='docblock'><p>Email sendable by an SMTP client</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.from_address' class='method stab '><span id='from_address.v' class='invisible'><code>fn <a href='#tymethod.from_address' class='fnname'>from_address</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></h3><div class='docblock'><p>From address</p>
-</div><h3 id='tymethod.to_addresses' class='method stab '><span id='to_addresses.v' class='invisible'><code>fn <a href='#tymethod.to_addresses' class='fnname'>to_addresses</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><div class='docblock'><p>To addresses</p>
+        <h3 id='tymethod.envelope' class='method stab '><span id='envelope.v' class='invisible'><code>fn <a href='#tymethod.envelope' class='fnname'>envelope</a>(&amp;self) -&gt; &amp;<a class='struct' href='../../lettre/email/struct.Envelope.html' title='lettre::email::Envelope'>Envelope</a></code></span></h3><div class='docblock'><p>Envelope</p>
 </div><h3 id='tymethod.message_id' class='method stab '><span id='message_id.v' class='invisible'><code>fn <a href='#tymethod.message_id' class='fnname'>message_id</a>(&amp;self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></h3><div class='docblock'><p>Message ID</p>
 </div><h3 id='tymethod.message' class='method stab '><span id='message.v' class='invisible'><code>fn <a href='#tymethod.message' class='fnname'>message</a>(self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code></span></h3><div class='docblock'><p>Message content</p>
 </div></div>

@@ -9,8 +9,8 @@
 
     <title>mod.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
     
 
     
@@ -985,6 +985,21 @@
 <span id="941">941</span>
 <span id="942">942</span>
 <span id="943">943</span>
+<span id="944">944</span>
+<span id="945">945</span>
+<span id="946">946</span>
+<span id="947">947</span>
+<span id="948">948</span>
+<span id="949">949</span>
+<span id="950">950</span>
+<span id="951">951</span>
+<span id="952">952</span>
+<span id="953">953</span>
+<span id="954">954</span>
+<span id="955">955</span>
+<span id="956">956</span>
+<span id="957">957</span>
+<span id="958">958</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Simple email representation</span>
 
@@ -1258,9 +1273,9 @@
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>,<span class='ident'>Eq</span>,<span class='ident'>Clone</span>,<span class='ident'>Debug</span>,<span class='ident'>Default</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Envelope</span> {
     <span class='doccomment'>/// The envelope recipients&#39; addresses</span>
-    <span class='ident'>to</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
+    <span class='kw'>pub</span> <span class='ident'>to</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
     <span class='doccomment'>/// The envelope sender address</span>
-    <span class='ident'>from</span>: <span class='ident'>String</span>,
+    <span class='kw'>pub</span> <span class='ident'>from</span>: <span class='ident'>String</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>Envelope</span> {
@@ -1716,10 +1731,8 @@
 
 <span class='doccomment'>/// Email sendable by an SMTP client</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>SendableEmail</span> {
-    <span class='doccomment'>/// From address</span>
-    <span class='kw'>fn</span> <span class='ident'>from_address</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span>;
-    <span class='doccomment'>/// To addresses</span>
-    <span class='kw'>fn</span> <span class='ident'>to_addresses</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>;
+    <span class='doccomment'>/// Envelope</span>
+    <span class='kw'>fn</span> <span class='ident'>envelope</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Envelope</span>;
     <span class='doccomment'>/// Message ID</span>
     <span class='kw'>fn</span> <span class='ident'>message_id</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span>;
     <span class='doccomment'>/// Message content</span>
@@ -1729,35 +1742,31 @@
 <span class='doccomment'>/// Minimal email structure</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SimpleSendableEmail</span> {
-    <span class='doccomment'>/// From address</span>
-    <span class='ident'>from</span>: <span class='ident'>String</span>,
-    <span class='doccomment'>/// To addresses</span>
-    <span class='ident'>to</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-    <span class='doccomment'>/// Message</span>
+    <span class='doccomment'>/// Message envelope</span>
+    <span class='ident'>envelope</span>: <span class='ident'>Envelope</span>,
+    <span class='doccomment'>/// Message content</span>
     <span class='ident'>message</span>: <span class='ident'>String</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>SimpleSendableEmail</span> {
     <span class='doccomment'>/// Returns a new email</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>from_address</span>: <span class='ident'>String</span>,
-               <span class='ident'>to_address</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
+               <span class='ident'>to_addresses</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
                <span class='ident'>message</span>: <span class='ident'>String</span>)
                <span class='op'>-&gt;</span> <span class='ident'>SimpleSendableEmail</span> {
         <span class='ident'>SimpleSendableEmail</span> {
-            <span class='ident'>from</span>: <span class='ident'>from_address</span>,
-            <span class='ident'>to</span>: <span class='ident'>to_address</span>,
+            <span class='ident'>envelope</span>: <span class='ident'>Envelope</span> {
+                <span class='ident'>from</span>: <span class='ident'>from_address</span>,
+                <span class='ident'>to</span>: <span class='ident'>to_addresses</span>,
+            },
             <span class='ident'>message</span>: <span class='ident'>message</span>,
         }
     }
 }
 
 <span class='kw'>impl</span> <span class='ident'>SendableEmail</span> <span class='kw'>for</span> <span class='ident'>SimpleSendableEmail</span> {
-    <span class='kw'>fn</span> <span class='ident'>from_address</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-        <span class='self'>self</span>.<span class='ident'>from</span>.<span class='ident'>clone</span>()
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>to_addresses</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>to</span>.<span class='ident'>clone</span>()
+    <span class='kw'>fn</span> <span class='ident'>envelope</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Envelope</span> {
+        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>envelope</span>
     }
 
     <span class='kw'>fn</span> <span class='ident'>message_id</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
@@ -1770,12 +1779,8 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>SendableEmail</span> <span class='kw'>for</span> <span class='ident'>Email</span> {
-    <span class='kw'>fn</span> <span class='ident'>to_addresses</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>envelope</span>.<span class='ident'>to</span>.<span class='ident'>clone</span>()
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>from_address</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-        <span class='self'>self</span>.<span class='ident'>envelope</span>.<span class='ident'>from</span>.<span class='ident'>clone</span>()
+    <span class='kw'>fn</span> <span class='ident'>envelope</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Envelope</span> {
+        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>envelope</span>
     }
 
     <span class='kw'>fn</span> <span class='ident'>message_id</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
@@ -1786,6 +1791,31 @@
         <span class='self'>self</span>.<span class='ident'>to_string</span>()
     }
 }
+
+<span class='doccomment'>/// Email sendable by any type of client, giving access to all fields</span>
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ExtractableEmail</span> {
+    <span class='doccomment'>/// From address</span>
+    <span class='kw'>fn</span> <span class='ident'>from_address</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>;
+    <span class='doccomment'>/// To addresses</span>
+    <span class='kw'>fn</span> <span class='ident'>to_addresses</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>;
+    <span class='doccomment'>/// Cc addresses</span>
+    <span class='kw'>fn</span> <span class='ident'>cc_addresses</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>;
+    <span class='doccomment'>/// Bcc addresses</span>
+    <span class='kw'>fn</span> <span class='ident'>bcc_addresses</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>;
+    <span class='doccomment'>/// Replay-To addresses</span>
+    <span class='kw'>fn</span> <span class='ident'>reply_to_address</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span>;
+    <span class='doccomment'>/// Subject</span>
+    <span class='kw'>fn</span> <span class='ident'>subject</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span>;
+    <span class='doccomment'>/// Message ID</span>
+    <span class='kw'>fn</span> <span class='ident'>message_id</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span>;
+    <span class='doccomment'>/// Other Headers</span>
+    <span class='kw'>fn</span> <span class='ident'>headers</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>;
+    <span class='doccomment'>/// html content</span>
+    <span class='kw'>fn</span> <span class='ident'>html</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span>;
+    <span class='doccomment'>/// text content</span>
+    <span class='kw'>fn</span> <span class='ident'>text</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span>;
+}
+
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>test</span> {
@@ -1919,8 +1949,8 @@
             .<span class='ident'>build</span>()
             .<span class='ident'>unwrap</span>();
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>email</span>.<span class='ident'>from_address</span>(), <span class='string'>&quot;sender@localhost&quot;</span>.<span class='ident'>to_string</span>());
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>email</span>.<span class='ident'>to_addresses</span>(),
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>email</span>.<span class='ident'>envelope</span>().<span class='ident'>from</span>, <span class='string'>&quot;sender@localhost&quot;</span>.<span class='ident'>to_string</span>());
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>email</span>.<span class='ident'>envelope</span>().<span class='ident'>to</span>,
                    <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;user@localhost&quot;</span>.<span class='ident'>to_string</span>(),
                         <span class='string'>&quot;cc@localhost&quot;</span>.<span class='ident'>to_string</span>(),
                         <span class='string'>&quot;bcc@localhost&quot;</span>.<span class='ident'>to_string</span>()]);
@@ -1984,11 +2014,11 @@
     
 
     <script>
-        window.rootPath = "../../../../";
+        window.rootPath = "../../../";
         window.currentCrate = "lettre";
     </script>
-    <script src="../../../../jquery.js"></script>
-    <script src="../../../../main.js"></script>
-    <script defer src="../../../../search-index.js"></script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
 </body>
 </html>
