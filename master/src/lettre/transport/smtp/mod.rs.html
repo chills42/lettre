@@ -589,7 +589,7 @@
                 <span class='prelude-val'>Ok</span>(<span class='ident'>SmtpTransportBuilder</span> {
                        <span class='ident'>server_addr</span>: <span class='ident'>addr</span>,
                        <span class='ident'>ssl_context</span>: <span class='ident'>SslContext</span>::<span class='ident'>builder</span>(<span class='ident'>SslMethod</span>::<span class='ident'>tls</span>()).<span class='ident'>unwrap</span>().<span class='ident'>build</span>(),
-                       <span class='ident'>security_level</span>: <span class='ident'>SecurityLevel</span>::<span class='ident'>Opportunistic</span>,
+                       <span class='ident'>security_level</span>: <span class='ident'>SecurityLevel</span>::<span class='ident'>AlwaysEncrypt</span>,
                        <span class='ident'>smtp_utf8</span>: <span class='bool-val'>false</span>,
                        <span class='ident'>credentials</span>: <span class='prelude-val'>None</span>,
                        <span class='ident'>connection_reuse_count_limit</span>: <span class='number'>100</span>,
