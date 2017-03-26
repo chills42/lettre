@@ -9,6 +9,7 @@
 
     <title>mod.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
     
@@ -999,7 +1000,6 @@
 <span id="955">955</span>
 <span id="956">956</span>
 <span id="957">957</span>
-<span id="958">958</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Simple email representation</span>
 
@@ -1555,8 +1555,8 @@
     <span class='doccomment'>/// Sets the email body to plain text content</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_text</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>body</span>: <span class='ident'>S</span>) {
         <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>set_body</span>(<span class='ident'>body</span>);
-        <span class='self'>self</span>.<span class='ident'>message</span>
-            .<span class='ident'>add_header</span>((<span class='string'>&quot;Content-Type&quot;</span>, <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='macro'>mime</span><span class='macro'>!</span>(<span class='ident'>Text</span><span class='op'>/</span><span class='ident'>Plain</span>; <span class='ident'>Charset</span><span class='op'>=</span><span class='ident'>Utf8</span>)).<span class='ident'>as_ref</span>()));
+        <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>((<span class='string'>&quot;Content-Type&quot;</span>,
+                                 <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='macro'>mime</span><span class='macro'>!</span>(<span class='ident'>Text</span><span class='op'>/</span><span class='ident'>Plain</span>; <span class='ident'>Charset</span><span class='op'>=</span><span class='ident'>Utf8</span>)).<span class='ident'>as_ref</span>()));
     }
 
     <span class='doccomment'>/// Sets the email body to HTML content</span>
@@ -1568,8 +1568,8 @@
     <span class='doccomment'>/// Sets the email body to HTML content</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_html</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>body</span>: <span class='ident'>S</span>) {
         <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>set_body</span>(<span class='ident'>body</span>);
-        <span class='self'>self</span>.<span class='ident'>message</span>
-            .<span class='ident'>add_header</span>((<span class='string'>&quot;Content-Type&quot;</span>, <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='macro'>mime</span><span class='macro'>!</span>(<span class='ident'>Text</span><span class='op'>/</span><span class='ident'>Html</span>; <span class='ident'>Charset</span><span class='op'>=</span><span class='ident'>Utf8</span>)).<span class='ident'>as_ref</span>()));
+        <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>((<span class='string'>&quot;Content-Type&quot;</span>,
+                                 <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='macro'>mime</span><span class='macro'>!</span>(<span class='ident'>Text</span><span class='op'>/</span><span class='ident'>Html</span>; <span class='ident'>Charset</span><span class='op'>=</span><span class='ident'>Utf8</span>)).<span class='ident'>as_ref</span>()));
     }
 
     <span class='doccomment'>/// Sets the email content</span>
@@ -1649,10 +1649,10 @@
                 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='ident'>Envelope</span>::<span class='ident'>new</span>();
                 <span class='comment'>// add all receivers in to_header and cc_header</span>
                 <span class='kw'>for</span> <span class='ident'>receiver</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>to_header</span>
-                    .<span class='ident'>iter</span>()
-                    .<span class='ident'>chain</span>(<span class='self'>self</span>.<span class='ident'>cc_header</span>.<span class='ident'>iter</span>())
-                    .<span class='ident'>chain</span>(<span class='self'>self</span>.<span class='ident'>bcc_header</span>.<span class='ident'>iter</span>()) {
-                    <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>receiver</span> {
+                        .<span class='ident'>iter</span>()
+                        .<span class='ident'>chain</span>(<span class='self'>self</span>.<span class='ident'>cc_header</span>.<span class='ident'>iter</span>())
+                        .<span class='ident'>chain</span>(<span class='self'>self</span>.<span class='ident'>bcc_header</span>.<span class='ident'>iter</span>()) {
+                    <span class='kw'>match</span> <span class='kw-2'>*</span><span class='ident'>receiver</span> {
                         <span class='ident'>Address</span>::<span class='ident'>Mailbox</span>(<span class='kw-2'>ref</span> <span class='ident'>m</span>) <span class='op'>=&gt;</span> <span class='ident'>e</span>.<span class='ident'>add_to</span>(<span class='ident'>m</span>.<span class='ident'>address</span>.<span class='ident'>clone</span>()),
                         <span class='ident'>Address</span>::<span class='ident'>Group</span>(_, <span class='kw-2'>ref</span> <span class='ident'>ms</span>) <span class='op'>=&gt;</span> {
                             <span class='kw'>for</span> <span class='ident'>m</span> <span class='kw'>in</span> <span class='ident'>ms</span>.<span class='ident'>iter</span>() {
@@ -1670,7 +1670,7 @@
                         <span class='comment'>// use a from header</span>
                         <span class='macro'>debug_assert</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>from_header</span>.<span class='ident'>len</span>()<span class='op'>&lt;=</span><span class='number'>1</span>); <span class='comment'>// else we&#39;d have sender_header</span>
                         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>from_header</span>.<span class='ident'>first</span>() {
-                            <span class='prelude-val'>Some</span>(<span class='ident'>a</span>) <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>a</span> {
+                            <span class='prelude-val'>Some</span>(<span class='ident'>a</span>) <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='kw-2'>*</span><span class='ident'>a</span> {
                                 <span class='comment'>// if we have a from header</span>
                                 <span class='ident'>Address</span>::<span class='ident'>Mailbox</span>(<span class='kw-2'>ref</span> <span class='ident'>mailbox</span>) <span class='op'>=&gt;</span> <span class='ident'>mailbox</span>.<span class='ident'>address</span>.<span class='ident'>clone</span>(), <span class='comment'>// use it</span>
                                 <span class='ident'>Address</span>::<span class='ident'>Group</span>(_,<span class='kw-2'>ref</span> <span class='ident'>mailbox_list</span>) <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='ident'>mailbox_list</span>.<span class='ident'>first</span>() {
@@ -1694,8 +1694,8 @@
             <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>(<span class='ident'>Header</span>::<span class='ident'>new_with_value</span>(<span class='string'>&quot;To&quot;</span>.<span class='ident'>into</span>(), <span class='self'>self</span>.<span class='ident'>to_header</span>).<span class='ident'>unwrap</span>());
         }
         <span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>from_header</span>.<span class='ident'>is_empty</span>() {
-            <span class='self'>self</span>.<span class='ident'>message</span>
-                .<span class='ident'>add_header</span>(<span class='ident'>Header</span>::<span class='ident'>new_with_value</span>(<span class='string'>&quot;From&quot;</span>.<span class='ident'>into</span>(), <span class='self'>self</span>.<span class='ident'>from_header</span>).<span class='ident'>unwrap</span>());
+            <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>(<span class='ident'>Header</span>::<span class='ident'>new_with_value</span>(<span class='string'>&quot;From&quot;</span>.<span class='ident'>into</span>(), <span class='self'>self</span>.<span class='ident'>from_header</span>)
+                                        .<span class='ident'>unwrap</span>());
         } <span class='kw'>else</span> {
             <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>MissingFrom</span>);
         }
@@ -1703,9 +1703,9 @@
             <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>(<span class='ident'>Header</span>::<span class='ident'>new_with_value</span>(<span class='string'>&quot;Cc&quot;</span>.<span class='ident'>into</span>(), <span class='self'>self</span>.<span class='ident'>cc_header</span>).<span class='ident'>unwrap</span>());
         }
         <span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>reply_to_header</span>.<span class='ident'>is_empty</span>() {
-            <span class='self'>self</span>.<span class='ident'>message</span>
-                .<span class='ident'>add_header</span>(<span class='ident'>Header</span>::<span class='ident'>new_with_value</span>(<span class='string'>&quot;Reply-To&quot;</span>.<span class='ident'>into</span>(), <span class='self'>self</span>.<span class='ident'>reply_to_header</span>)
-                    .<span class='ident'>unwrap</span>());
+            <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>add_header</span>(<span class='ident'>Header</span>::<span class='ident'>new_with_value</span>(<span class='string'>&quot;Reply-To&quot;</span>.<span class='ident'>into</span>(),
+                                                           <span class='self'>self</span>.<span class='ident'>reply_to_header</span>)
+                                            .<span class='ident'>unwrap</span>());
         }
 
         <span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>date_issued</span> {
@@ -1722,10 +1722,10 @@
         }
 
         <span class='prelude-val'>Ok</span>(<span class='ident'>Email</span> {
-            <span class='ident'>message</span>: <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>build</span>(),
-            <span class='ident'>envelope</span>: <span class='ident'>envelope</span>,
-            <span class='ident'>message_id</span>: <span class='ident'>message_id</span>,
-        })
+               <span class='ident'>message</span>: <span class='self'>self</span>.<span class='ident'>message</span>.<span class='ident'>build</span>(),
+               <span class='ident'>envelope</span>: <span class='ident'>envelope</span>,
+               <span class='ident'>message_id</span>: <span class='ident'>message_id</span>,
+           })
     }
 }
 
@@ -1819,9 +1819,9 @@
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>test</span> {
-    <span class='kw'>use</span> <span class='ident'>email_format</span>::{<span class='ident'>Header</span>, <span class='ident'>MimeMessage</span>};
 
     <span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>Email</span>, <span class='ident'>EmailBuilder</span>, <span class='ident'>Envelope</span>, <span class='ident'>IntoEmail</span>, <span class='ident'>SendableEmail</span>, <span class='ident'>SimpleEmail</span>};
+    <span class='kw'>use</span> <span class='ident'>email_format</span>::{<span class='ident'>Header</span>, <span class='ident'>MimeMessage</span>};
     <span class='kw'>use</span> <span class='ident'>time</span>::<span class='ident'>now</span>;
 
     <span class='kw'>use</span> <span class='ident'>uuid</span>::<span class='ident'>Uuid</span>;
@@ -1868,12 +1868,11 @@
         <span class='ident'>email</span>.<span class='ident'>message</span>.<span class='ident'>headers</span>.<span class='ident'>insert</span>(<span class='ident'>Header</span>::<span class='ident'>new_with_value</span>(<span class='string'>&quot;Message-ID&quot;</span>.<span class='ident'>to_string</span>(),
                                                             <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;&lt;{}@rust-smtp&gt;&quot;</span>,
                                                                     <span class='ident'>current_message</span>))
-            .<span class='ident'>unwrap</span>());
+                                             .<span class='ident'>unwrap</span>());
 
-        <span class='ident'>email</span>.<span class='ident'>message</span>
-            .<span class='ident'>headers</span>
-            .<span class='ident'>insert</span>(<span class='ident'>Header</span>::<span class='ident'>new_with_value</span>(<span class='string'>&quot;To&quot;</span>.<span class='ident'>to_string</span>(), <span class='string'>&quot;to@example.com&quot;</span>.<span class='ident'>to_string</span>())
-                .<span class='ident'>unwrap</span>());
+        <span class='ident'>email</span>.<span class='ident'>message</span>.<span class='ident'>headers</span>.<span class='ident'>insert</span>(<span class='ident'>Header</span>::<span class='ident'>new_with_value</span>(<span class='string'>&quot;To&quot;</span>.<span class='ident'>to_string</span>(),
+                                                            <span class='string'>&quot;to@example.com&quot;</span>.<span class='ident'>to_string</span>())
+                                             .<span class='ident'>unwrap</span>());
 
         <span class='ident'>email</span>.<span class='ident'>message</span>.<span class='ident'>body</span> <span class='op'>=</span> <span class='string'>&quot;body&quot;</span>.<span class='ident'>to_string</span>();
 

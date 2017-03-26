@@ -9,6 +9,7 @@
 
     <title>lettre::transport::smtp::SmtpTransportBuilder - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
     
@@ -55,7 +56,7 @@
 <div class='docblock'><p>Creates a new local SMTP client</p>
 </div><h4 id='method.localhost' class='method'><span id='localhost.v' class='invisible'><code>fn <a href='#method.localhost' class='fnname'>localhost</a>() -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../../lettre/transport/smtp/struct.SmtpTransportBuilder.html' title='lettre::transport::smtp::SmtpTransportBuilder'>SmtpTransportBuilder</a>, <a class='enum' href='../../../lettre/transport/smtp/error/enum.Error.html' title='lettre::transport::smtp::error::Error'>Error</a>&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new local SMTP client to port 25</p>
-</div><h4 id='method.ssl_context' class='method'><span id='ssl_context.v' class='invisible'><code>fn <a href='#method.ssl_context' class='fnname'>ssl_context</a>(self, ssl_context: <a class='struct' href='https://docs.rs/openssl/0.9.7/openssl/ssl/struct.SslContext.html' title='openssl::ssl::SslContext'>SslContext</a>) -&gt; <a class='struct' href='../../../lettre/transport/smtp/struct.SmtpTransportBuilder.html' title='lettre::transport::smtp::SmtpTransportBuilder'>SmtpTransportBuilder</a></code></span></h4>
+</div><h4 id='method.ssl_context' class='method'><span id='ssl_context.v' class='invisible'><code>fn <a href='#method.ssl_context' class='fnname'>ssl_context</a>(self, ssl_context: <a class='struct' href='https://docs.rs/openssl/0.9.10/openssl/ssl/struct.SslContext.html' title='openssl::ssl::SslContext'>SslContext</a>) -&gt; <a class='struct' href='../../../lettre/transport/smtp/struct.SmtpTransportBuilder.html' title='lettre::transport::smtp::SmtpTransportBuilder'>SmtpTransportBuilder</a></code></span></h4>
 <div class='docblock'><p>Use STARTTLS with a specific context</p>
 </div><h4 id='method.security_level' class='method'><span id='security_level.v' class='invisible'><code>fn <a href='#method.security_level' class='fnname'>security_level</a>(self, level: <a class='enum' href='../../../lettre/transport/smtp/enum.SecurityLevel.html' title='lettre::transport::smtp::SecurityLevel'>SecurityLevel</a>) -&gt; <a class='struct' href='../../../lettre/transport/smtp/struct.SmtpTransportBuilder.html' title='lettre::transport::smtp::SmtpTransportBuilder'>SmtpTransportBuilder</a></code></span></h4>
 <div class='docblock'><p>Set the security level for SSL/TLS</p>

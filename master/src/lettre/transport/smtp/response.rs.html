@@ -9,6 +9,7 @@
 
     <title>response.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
     
@@ -623,13 +624,12 @@
 <span id="579">579</span>
 <span id="580">580</span>
 <span id="581">581</span>
-<span id="582">582</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! SMTP response, containing a mandatory return code and an optional text</span>
 <span class='doccomment'>//! message</span>
 
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Category</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Severity</span>::<span class='op'>*</span>;
+<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Category</span>::<span class='kw-2'>*</span>;
+<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Severity</span>::<span class='kw-2'>*</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>::{<span class='ident'>Display</span>, <span class='ident'>Formatter</span>, <span class='prelude-ty'>Result</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>result</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>;
@@ -665,7 +665,7 @@
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span> {
         <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>,
                <span class='string'>&quot;{}&quot;</span>,
-               <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+               <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
                    <span class='ident'>PositiveCompletion</span> <span class='op'>=&gt;</span> <span class='number'>2</span>,
                    <span class='ident'>PositiveIntermediate</span> <span class='op'>=&gt;</span> <span class='number'>3</span>,
                    <span class='ident'>TransientNegativeCompletion</span> <span class='op'>=&gt;</span> <span class='number'>4</span>,
@@ -710,7 +710,7 @@
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span> {
         <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>,
                <span class='string'>&quot;{}&quot;</span>,
-               <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+               <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
                    <span class='ident'>Syntax</span> <span class='op'>=&gt;</span> <span class='number'>0</span>,
                    <span class='ident'>Information</span> <span class='op'>=&gt;</span> <span class='number'>1</span>,
                    <span class='ident'>Connections</span> <span class='op'>=&gt;</span> <span class='number'>2</span>,
@@ -743,10 +743,10 @@
                    <span class='ident'>s</span>[<span class='number'>2</span>..<span class='number'>3</span>].<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>()) {
                 (<span class='prelude-val'>Ok</span>(<span class='ident'>severity</span>), <span class='prelude-val'>Ok</span>(<span class='ident'>category</span>), <span class='prelude-val'>Ok</span>(<span class='ident'>detail</span>)) <span class='op'>=&gt;</span> {
                     <span class='prelude-val'>Ok</span>(<span class='ident'>Code</span> {
-                        <span class='ident'>severity</span>: <span class='ident'>severity</span>,
-                        <span class='ident'>category</span>: <span class='ident'>category</span>,
-                        <span class='ident'>detail</span>: <span class='ident'>detail</span>,
-                    })
+                           <span class='ident'>severity</span>: <span class='ident'>severity</span>,
+                           <span class='ident'>category</span>: <span class='ident'>category</span>,
+                           <span class='ident'>detail</span>: <span class='ident'>detail</span>,
+                       })
                 }
                 _ <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>ResponseParsing</span>(<span class='string'>&quot;Could not parse response code&quot;</span>)),
             }
@@ -844,8 +844,7 @@
     <span class='doccomment'>/// Tells if the response is positive</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_positive</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>code</span>.<span class='ident'>severity</span> {
-            <span class='ident'>PositiveCompletion</span> <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
-            <span class='ident'>PositiveIntermediate</span> <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
+            <span class='ident'>PositiveCompletion</span> <span class='op'>|</span> <span class='ident'>PositiveIntermediate</span> <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
             _ <span class='op'>=&gt;</span> <span class='bool-val'>false</span>,
         }
     }
@@ -1028,7 +1027,7 @@
                               <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>(),
                                    <span class='string'>&quot;8BITMIME&quot;</span>.<span class='ident'>to_string</span>(),
                                    <span class='string'>&quot;SIZE 42&quot;</span>.<span class='ident'>to_string</span>()])
-            .<span class='ident'>is_positive</span>());
+                        .<span class='ident'>is_positive</span>());
         <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>Code</span> {
                                    <span class='ident'>severity</span>: <span class='string'>&quot;5&quot;</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>Severity</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>(),
                                    <span class='ident'>category</span>: <span class='string'>&quot;4&quot;</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>Category</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>(),
@@ -1037,7 +1036,7 @@
                                <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>(),
                                     <span class='string'>&quot;8BITMIME&quot;</span>.<span class='ident'>to_string</span>(),
                                     <span class='string'>&quot;SIZE 42&quot;</span>.<span class='ident'>to_string</span>()])
-            .<span class='ident'>is_positive</span>());
+                         .<span class='ident'>is_positive</span>());
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -1050,7 +1049,7 @@
                                  <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;8BITMIME&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;SIZE 42&quot;</span>.<span class='ident'>to_string</span>()])
-                       .<span class='ident'>message</span>(),
+                           .<span class='ident'>message</span>(),
                    <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>(), <span class='string'>&quot;8BITMIME&quot;</span>.<span class='ident'>to_string</span>(), <span class='string'>&quot;SIZE 42&quot;</span>.<span class='ident'>to_string</span>()]);
         <span class='kw'>let</span> <span class='ident'>empty_message</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[];
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>Code</span> {
@@ -1059,7 +1058,7 @@
                                      <span class='ident'>detail</span>: <span class='number'>1</span>,
                                  },
                                  <span class='macro'>vec</span><span class='macro'>!</span>[])
-                       .<span class='ident'>message</span>(),
+                           .<span class='ident'>message</span>(),
                    <span class='ident'>empty_message</span>);
     }
 
@@ -1073,7 +1072,7 @@
                                  <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;8BITMIME&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;SIZE 42&quot;</span>.<span class='ident'>to_string</span>()])
-                       .<span class='ident'>severity</span>(),
+                           .<span class='ident'>severity</span>(),
                    <span class='ident'>Severity</span>::<span class='ident'>PositiveCompletion</span>);
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>Code</span> {
                                      <span class='ident'>severity</span>: <span class='string'>&quot;5&quot;</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>Severity</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>(),
@@ -1083,7 +1082,7 @@
                                  <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;8BITMIME&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;SIZE 42&quot;</span>.<span class='ident'>to_string</span>()])
-                       .<span class='ident'>severity</span>(),
+                           .<span class='ident'>severity</span>(),
                    <span class='ident'>Severity</span>::<span class='ident'>PermanentNegativeCompletion</span>);
     }
 
@@ -1097,7 +1096,7 @@
                                  <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;8BITMIME&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;SIZE 42&quot;</span>.<span class='ident'>to_string</span>()])
-                       .<span class='ident'>category</span>(),
+                           .<span class='ident'>category</span>(),
                    <span class='ident'>Category</span>::<span class='ident'>Unspecified4</span>);
     }
 
@@ -1111,7 +1110,7 @@
                                  <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;8BITMIME&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;SIZE 42&quot;</span>.<span class='ident'>to_string</span>()])
-                       .<span class='ident'>detail</span>(),
+                           .<span class='ident'>detail</span>(),
                    <span class='number'>1</span>);
     }
 
@@ -1125,7 +1124,7 @@
                                  <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;8BITMIME&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;SIZE 42&quot;</span>.<span class='ident'>to_string</span>()])
-                       .<span class='ident'>code</span>(),
+                           .<span class='ident'>code</span>(),
                    <span class='string'>&quot;241&quot;</span>);
     }
 
@@ -1139,7 +1138,7 @@
                               <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>(),
                                    <span class='string'>&quot;8BITMIME&quot;</span>.<span class='ident'>to_string</span>(),
                                    <span class='string'>&quot;SIZE 42&quot;</span>.<span class='ident'>to_string</span>()])
-            .<span class='ident'>has_code</span>(<span class='number'>241</span>));
+                        .<span class='ident'>has_code</span>(<span class='number'>241</span>));
         <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>Code</span> {
                                    <span class='ident'>severity</span>: <span class='string'>&quot;2&quot;</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>Severity</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>(),
                                    <span class='ident'>category</span>: <span class='string'>&quot;4&quot;</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>Category</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>(),
@@ -1148,7 +1147,7 @@
                                <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>(),
                                     <span class='string'>&quot;8BITMIME&quot;</span>.<span class='ident'>to_string</span>(),
                                     <span class='string'>&quot;SIZE 42&quot;</span>.<span class='ident'>to_string</span>()])
-            .<span class='ident'>has_code</span>(<span class='number'>251</span>));
+                         .<span class='ident'>has_code</span>(<span class='number'>251</span>));
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -1161,7 +1160,7 @@
                                  <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;8BITMIME&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;SIZE 42&quot;</span>.<span class='ident'>to_string</span>()])
-                       .<span class='ident'>first_word</span>(),
+                           .<span class='ident'>first_word</span>(),
                    <span class='prelude-val'>Some</span>(<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>()));
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>Code</span> {
                                      <span class='ident'>severity</span>: <span class='string'>&quot;2&quot;</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>Severity</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>(),
@@ -1171,7 +1170,7 @@
                                  <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;me mo&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;8BITMIME&quot;</span>.<span class='ident'>to_string</span>(),
                                       <span class='string'>&quot;SIZE 42&quot;</span>.<span class='ident'>to_string</span>()])
-                       .<span class='ident'>first_word</span>(),
+                           .<span class='ident'>first_word</span>(),
                    <span class='prelude-val'>Some</span>(<span class='string'>&quot;me&quot;</span>.<span class='ident'>to_string</span>()));
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>Code</span> {
                                      <span class='ident'>severity</span>: <span class='string'>&quot;2&quot;</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>Severity</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>(),
@@ -1179,7 +1178,7 @@
                                      <span class='ident'>detail</span>: <span class='number'>1</span>,
                                  },
                                  <span class='macro'>vec</span><span class='macro'>!</span>[])
-                       .<span class='ident'>first_word</span>(),
+                           .<span class='ident'>first_word</span>(),
                    <span class='prelude-val'>None</span>);
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>Code</span> {
                                      <span class='ident'>severity</span>: <span class='string'>&quot;2&quot;</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>Severity</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>(),
@@ -1187,7 +1186,7 @@
                                      <span class='ident'>detail</span>: <span class='number'>1</span>,
                                  },
                                  <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot; &quot;</span>.<span class='ident'>to_string</span>()])
-                       .<span class='ident'>first_word</span>(),
+                           .<span class='ident'>first_word</span>(),
                    <span class='prelude-val'>None</span>);
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>Code</span> {
                                      <span class='ident'>severity</span>: <span class='string'>&quot;2&quot;</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>Severity</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>(),
@@ -1195,7 +1194,7 @@
                                      <span class='ident'>detail</span>: <span class='number'>1</span>,
                                  },
                                  <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;  &quot;</span>.<span class='ident'>to_string</span>()])
-                       .<span class='ident'>first_word</span>(),
+                           .<span class='ident'>first_word</span>(),
                    <span class='prelude-val'>None</span>);
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>Code</span> {
                                      <span class='ident'>severity</span>: <span class='string'>&quot;2&quot;</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>Severity</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>(),
@@ -1203,7 +1202,7 @@
                                      <span class='ident'>detail</span>: <span class='number'>1</span>,
                                  },
                                  <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>()])
-                       .<span class='ident'>first_word</span>(),
+                           .<span class='ident'>first_word</span>(),
                    <span class='prelude-val'>None</span>);
     }
 }

@@ -9,6 +9,7 @@
 
     <title>extension.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
     
@@ -289,7 +290,7 @@
 
 <span class='kw'>impl</span> <span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>Extension</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
             <span class='ident'>Extension</span>::<span class='ident'>EightBitMime</span> <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;{}&quot;</span>, <span class='string'>&quot;8BITMIME&quot;</span>),
             <span class='ident'>Extension</span>::<span class='ident'>SmtpUtfEight</span> <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;{}&quot;</span>, <span class='string'>&quot;SMTPUTF8&quot;</span>),
             <span class='ident'>Extension</span>::<span class='ident'>StartTls</span> <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;{}&quot;</span>, <span class='string'>&quot;STARTTLS&quot;</span>),
@@ -364,9 +365,9 @@
         }
 
         <span class='prelude-val'>Ok</span>(<span class='ident'>ServerInfo</span> {
-            <span class='ident'>name</span>: <span class='ident'>name</span>,
-            <span class='ident'>features</span>: <span class='ident'>features</span>,
-        })
+               <span class='ident'>name</span>: <span class='ident'>name</span>,
+               <span class='ident'>features</span>: <span class='ident'>features</span>,
+           })
     }
 
     <span class='doccomment'>/// Checks if the server supports an ESMTP feature</span>
@@ -382,9 +383,9 @@
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>test</span> {
-    <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashSet</span>;
 
     <span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>Extension</span>, <span class='ident'>ServerInfo</span>};
+    <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashSet</span>;
     <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>authentication</span>::<span class='ident'>Mechanism</span>;
     <span class='kw'>use</span> <span class='ident'>transport</span>::<span class='ident'>smtp</span>::<span class='ident'>response</span>::{<span class='ident'>Category</span>, <span class='ident'>Code</span>, <span class='ident'>Response</span>, <span class='ident'>Severity</span>};
 

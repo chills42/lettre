@@ -9,6 +9,7 @@
 
     <title>mod.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
     
@@ -475,6 +476,14 @@
 <span id="431">431</span>
 <span id="432">432</span>
 <span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! This transport sends emails using the SMTP protocol</span>
 
@@ -578,17 +587,17 @@
         <span class='kw'>match</span> <span class='ident'>addresses</span>.<span class='ident'>next</span>() {
             <span class='prelude-val'>Some</span>(<span class='ident'>addr</span>) <span class='op'>=&gt;</span> {
                 <span class='prelude-val'>Ok</span>(<span class='ident'>SmtpTransportBuilder</span> {
-                    <span class='ident'>server_addr</span>: <span class='ident'>addr</span>,
-                    <span class='ident'>ssl_context</span>: <span class='ident'>SslContext</span>::<span class='ident'>builder</span>(<span class='ident'>SslMethod</span>::<span class='ident'>tls</span>()).<span class='ident'>unwrap</span>().<span class='ident'>build</span>(),
-                    <span class='ident'>security_level</span>: <span class='ident'>SecurityLevel</span>::<span class='ident'>Opportunistic</span>,
-                    <span class='ident'>smtp_utf8</span>: <span class='bool-val'>false</span>,
-                    <span class='ident'>credentials</span>: <span class='prelude-val'>None</span>,
-                    <span class='ident'>connection_reuse_count_limit</span>: <span class='number'>100</span>,
-                    <span class='ident'>connection_reuse</span>: <span class='bool-val'>false</span>,
-                    <span class='ident'>hello_name</span>: <span class='string'>&quot;localhost&quot;</span>.<span class='ident'>to_string</span>(),
-                    <span class='ident'>authentication_mechanism</span>: <span class='prelude-val'>None</span>,
-                    <span class='ident'>timeout</span>: <span class='prelude-val'>Some</span>(<span class='ident'>Duration</span>::<span class='ident'>new</span>(<span class='number'>60</span>, <span class='number'>0</span>)),
-                })
+                       <span class='ident'>server_addr</span>: <span class='ident'>addr</span>,
+                       <span class='ident'>ssl_context</span>: <span class='ident'>SslContext</span>::<span class='ident'>builder</span>(<span class='ident'>SslMethod</span>::<span class='ident'>tls</span>()).<span class='ident'>unwrap</span>().<span class='ident'>build</span>(),
+                       <span class='ident'>security_level</span>: <span class='ident'>SecurityLevel</span>::<span class='ident'>Opportunistic</span>,
+                       <span class='ident'>smtp_utf8</span>: <span class='bool-val'>false</span>,
+                       <span class='ident'>credentials</span>: <span class='prelude-val'>None</span>,
+                       <span class='ident'>connection_reuse_count_limit</span>: <span class='number'>100</span>,
+                       <span class='ident'>connection_reuse</span>: <span class='bool-val'>false</span>,
+                       <span class='ident'>hello_name</span>: <span class='string'>&quot;localhost&quot;</span>.<span class='ident'>to_string</span>(),
+                       <span class='ident'>authentication_mechanism</span>: <span class='prelude-val'>None</span>,
+                       <span class='ident'>timeout</span>: <span class='prelude-val'>Some</span>(<span class='ident'>Duration</span>::<span class='ident'>new</span>(<span class='number'>60</span>, <span class='number'>0</span>)),
+                   })
             }
             <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>From</span>::<span class='ident'>from</span>(<span class='string'>&quot;Could nor resolve hostname&quot;</span>)),
         }
@@ -791,10 +800,11 @@
             <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>get_ehlo</span>());
 
             <span class='kw'>match</span> (<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>client_info</span>.<span class='ident'>security_level</span>,
-                   <span class='self'>self</span>.<span class='ident'>server_info</span>.<span class='ident'>as_ref</span>().<span class='ident'>unwrap</span>().<span class='ident'>supports_feature</span>(<span class='kw-2'>&amp;</span><span class='ident'>Extension</span>::<span class='ident'>StartTls</span>)) {
-                (<span class='kw-2'>&amp;</span><span class='ident'>SecurityLevel</span>::<span class='ident'>AlwaysEncrypt</span>, <span class='bool-val'>false</span>) <span class='op'>=&gt;</span> {
-                    <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>From</span>::<span class='ident'>from</span>(<span class='string'>&quot;Could not encrypt connection, aborting&quot;</span>))
-                }
+                   <span class='self'>self</span>.<span class='ident'>server_info</span>
+                       .<span class='ident'>as_ref</span>()
+                       .<span class='ident'>unwrap</span>()
+                       .<span class='ident'>supports_feature</span>(<span class='kw-2'>&amp;</span><span class='ident'>Extension</span>::<span class='ident'>StartTls</span>)) {
+                (<span class='kw-2'>&amp;</span><span class='ident'>SecurityLevel</span>::<span class='ident'>AlwaysEncrypt</span>, <span class='bool-val'>false</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>From</span>::<span class='ident'>from</span>(<span class='string'>&quot;Could not encrypt connection, aborting&quot;</span>)),
                 (<span class='kw-2'>&amp;</span><span class='ident'>SecurityLevel</span>::<span class='ident'>Opportunistic</span>, <span class='bool-val'>false</span>) <span class='op'>=&gt;</span> (),
                 (<span class='kw-2'>&amp;</span><span class='ident'>SecurityLevel</span>::<span class='ident'>NeverEncrypt</span>, _) <span class='op'>=&gt;</span> (),
                 (<span class='kw-2'>&amp;</span><span class='ident'>SecurityLevel</span>::<span class='ident'>EncryptedWrapper</span>, _) <span class='op'>=&gt;</span> (),
@@ -811,7 +821,10 @@
             }
 
             <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>client_info</span>.<span class='ident'>credentials</span>.<span class='ident'>is_some</span>() {
-                <span class='kw'>let</span> (<span class='ident'>username</span>, <span class='ident'>password</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>client_info</span>.<span class='ident'>credentials</span>.<span class='ident'>clone</span>().<span class='ident'>unwrap</span>();
+                <span class='kw'>let</span> (<span class='ident'>username</span>, <span class='ident'>password</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>client_info</span>
+                    .<span class='ident'>credentials</span>
+                    .<span class='ident'>clone</span>()
+                    .<span class='ident'>unwrap</span>();
 
                 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>found</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
 
@@ -822,7 +835,8 @@
                         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>client</span>.<span class='ident'>is_encrypted</span>() {
                             <span class='comment'>// If encrypted, allow all mechanisms, with a preference for the</span>
                             <span class='comment'>// simplest</span>
-                            <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>Mechanism</span>::<span class='ident'>Plain</span>, <span class='ident'>Mechanism</span>::<span class='ident'>CramMd5</span>]
+                            <span class='comment'>// Login is obsolete so try it last</span>
+                            <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>Mechanism</span>::<span class='ident'>Plain</span>, <span class='ident'>Mechanism</span>::<span class='ident'>CramMd5</span>, <span class='ident'>Mechanism</span>::<span class='ident'>Login</span>]
                         } <span class='kw'>else</span> {
                             <span class='comment'>// If not encrypted, do not allow clear-text passwords</span>
                             <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>Mechanism</span>::<span class='ident'>CramMd5</span>]
@@ -831,7 +845,10 @@
                 };
 
                 <span class='kw'>for</span> <span class='ident'>mechanism</span> <span class='kw'>in</span> <span class='ident'>accepted_mechanisms</span> {
-                    <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>server_info</span>.<span class='ident'>as_ref</span>().<span class='ident'>unwrap</span>().<span class='ident'>supports_auth_mechanism</span>(<span class='ident'>mechanism</span>) {
+                    <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>server_info</span>
+                           .<span class='ident'>as_ref</span>()
+                           .<span class='ident'>unwrap</span>()
+                           .<span class='ident'>supports_auth_mechanism</span>(<span class='ident'>mechanism</span>) {
                         <span class='ident'>found</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
                         <span class='macro'>try_smtp</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>client</span>.<span class='ident'>auth</span>(<span class='ident'>mechanism</span>, <span class='kw-2'>&amp;</span><span class='ident'>username</span>, <span class='kw-2'>&amp;</span><span class='ident'>password</span>), <span class='self'>self</span>);
                         <span class='kw'>break</span>;
@@ -846,13 +863,13 @@
 
         <span class='comment'>// Mail</span>
         <span class='kw'>let</span> <span class='ident'>mail_options</span> <span class='op'>=</span> <span class='kw'>match</span> (<span class='self'>self</span>.<span class='ident'>server_info</span>
-            .<span class='ident'>as_ref</span>()
-            .<span class='ident'>unwrap</span>()
-            .<span class='ident'>supports_feature</span>(<span class='kw-2'>&amp;</span><span class='ident'>Extension</span>::<span class='ident'>EightBitMime</span>),
-                                  <span class='self'>self</span>.<span class='ident'>server_info</span>
-            .<span class='ident'>as_ref</span>()
-            .<span class='ident'>unwrap</span>()
-            .<span class='ident'>supports_feature</span>(<span class='kw-2'>&amp;</span><span class='ident'>Extension</span>::<span class='ident'>SmtpUtfEight</span>)) {
+                   .<span class='ident'>as_ref</span>()
+                   .<span class='ident'>unwrap</span>()
+                   .<span class='ident'>supports_feature</span>(<span class='kw-2'>&amp;</span><span class='ident'>Extension</span>::<span class='ident'>EightBitMime</span>),
+               <span class='self'>self</span>.<span class='ident'>server_info</span>
+                   .<span class='ident'>as_ref</span>()
+                   .<span class='ident'>unwrap</span>()
+                   .<span class='ident'>supports_feature</span>(<span class='kw-2'>&amp;</span><span class='ident'>Extension</span>::<span class='ident'>SmtpUtfEight</span>)) {
             (<span class='bool-val'>true</span>, <span class='bool-val'>true</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='string'>&quot;BODY=8BITMIME SMTPUTF8&quot;</span>),
             (<span class='bool-val'>true</span>, <span class='bool-val'>false</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='string'>&quot;BODY=8BITMIME&quot;</span>),
             (<span class='bool-val'>false</span>, _) <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
@@ -887,12 +904,12 @@
                   <span class='self'>self</span>.<span class='ident'>state</span>.<span class='ident'>connection_reuse_count</span>,
                   <span class='ident'>message</span>.<span class='ident'>len</span>(),
                   <span class='ident'>result</span>.<span class='ident'>as_ref</span>()
-                        .<span class='ident'>ok</span>()
-                        .<span class='ident'>unwrap</span>()
-                        .<span class='ident'>message</span>()
-                        .<span class='ident'>iter</span>()
-                        .<span class='ident'>next</span>()
-                        .<span class='ident'>unwrap_or</span>(<span class='kw-2'>&amp;</span><span class='string'>&quot;no response&quot;</span>.<span class='ident'>to_string</span>()));
+                      .<span class='ident'>ok</span>()
+                      .<span class='ident'>unwrap</span>()
+                      .<span class='ident'>message</span>()
+                      .<span class='ident'>iter</span>()
+                      .<span class='ident'>next</span>()
+                      .<span class='ident'>unwrap_or</span>(<span class='kw-2'>&amp;</span><span class='string'>&quot;no response&quot;</span>.<span class='ident'>to_string</span>()));
         }
 
         <span class='comment'>// Test if we can reuse the existing connection</span>
